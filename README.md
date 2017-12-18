@@ -1,7 +1,8 @@
 # Absolutely Proprietary
 Proprietary package detector. Compares your installed packages against Parabola's package blacklist and then prints your Stallman Freedom Index.
 
-![](https://github.com/vmavromatis/absolutely-proprietary/raw/master/rms.jpg)
+# Quick install & run
+`sudo pacman -S python2 python2-pip --needed && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && sudo pip2 install -r requirements.txt && python2 main.py`
 
 # Dependencies
 * Python 2
