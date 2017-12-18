@@ -4,6 +4,8 @@ Proprietary package detector. Compares your installed packages against Parabola'
 # Quick install & run
 `sudo pacman -S python2 python2-pip --needed && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && sudo pip2 install -r requirements.txt && python2 main.py`
 
+Once done, you may run `less /tmp/absolutely-proprietary/disgusting.txt` to view the detailed results.
+
 # Dependencies
 * `python2` and `python2-pip`.
 *  `colorama`, `termcolor`, and `pyfiglet`.
