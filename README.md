@@ -4,7 +4,10 @@ Proprietary package detector. Compares your installed packages against Parabola'
 # Quick install & run
 `sudo pacman -S python2 python2-pip --needed && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && sudo pip2 install -r requirements.txt && python2 main.py`
 
-Once done, you may run `less /tmp/absolutely-proprietary/disgusting.txt` to view the detailed results.
+Once done, you may run `less /tmp/absolutely-proprietary/disgusting.txt` to view the detailed results. Explanation of terms:
+- *[nonfree]*: This package is blatantly nonfree software. 
+- *[semifree]*: This package is mostly free, but contains some nonfree software.
+- *[uses-nonfree]*: This package depends on, recommends, or otherwise inappropriately integrates with other nonfree software or services.
 
 # Dependencies
 * `python2` and `python2-pip`.
