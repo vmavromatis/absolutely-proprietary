@@ -2,11 +2,11 @@
 Proprietary package detector. Compares your installed packages against Parabola's package blacklist and then prints your Stallman Freedom Index.
 
 # Quick install & run
-`sudo pacman -S python2 python2-pip --needed && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && sudo pip2 install -r requirements.txt && python2 main.py`
+`sudo pacman -S python2 python2-pip --needed && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && sudo pip2 install -r requirements.txt && python2 main.py`
 
 # Dependencies
-* Python 2
-* `colorama`, `termcolor`, and `pyfiglet`.
+* `python2` and `python2-pip`.
+*  `colorama`, `termcolor`, and `pyfiglet`.
 
 After installing Python 2, install dependencies: `pip install -r requirements.txt`
 
