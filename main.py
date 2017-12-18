@@ -6,7 +6,6 @@ from colorama import init
 init(strip=not sys.stdout.isatty()) # strip colors if stdout is redirected
 from termcolor import cprint
 from pyfiglet import figlet_format
-import re
 
 #Get local installed packages
 f1 = open("installed.txt", "w+")
@@ -26,21 +25,9 @@ with open('installed.txt') as installed:
         with open("blacklist.txt") as f:
             for line in f:
                 # Find package names in blacklist
-                stripped = re.match('.*:\s*\[', line)
-                if stripped is not None:
-                    real_pkg_name = stripped.group(0)
+                real_pkg_name = line.split(':')[0]
 
-                # Escape characters which could couse problems as pattern
-                regex = ''
-                for c in package:
-                    if c in '+':
-                        regex += '\\'
-
-                    regex += c
-
-                # Find the package in the blacklist
-                matched = re.match(r'\b' + regex + r'\b', real_pkg_name)
-                if matched is not None:
+                if real_pkg_name == package:
                     print (line)
                     countproprietary +=1
                     break
