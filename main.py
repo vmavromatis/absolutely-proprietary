@@ -10,7 +10,7 @@ from pyfiglet import figlet_format
 
 # Get local installed packages
 f1 = open("installed.txt", "w+")
-f1.write(subprocess.check_output(['bash', '-c', 'pacman -Qqe', 'shell=True']))
+f1.write(subprocess.check_output(['bash', '-c', 'pacman -Qq', 'shell=True']))
 f1.close()
 
 # Get Parabola blacklist+AUR
