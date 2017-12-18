@@ -21,15 +21,20 @@ f2.close()
 countproprietary=0
 with open('installed.txt') as installed:
     for package in installed:
+        package = package.strip()
         with open("blacklist.txt") as f:
             for line in f:
-                if package in line:
-                     print (line)
-                     countproprietary +=1
+                # Find package names in blacklist
+                real_pkg_name = line.split(':')[0]
+
+                if real_pkg_name == package:
+                    print (line)
+                    countproprietary +=1
+                    break
 
 #Print results
 cprint(figlet_format(('%s ABSOLUTELY PROPRIETARY PACKAGES' % (countproprietary)), font='univers', width=160),
-       'green', attrs=['bold'])
+        'green', attrs=['bold'])
 
 total=int(subprocess.check_output(['bash', '-c', 'pacman -Q | wc -l', 'shell=True']))
 stallmanfreedomindex=(total-countproprietary)*100/total
