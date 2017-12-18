@@ -31,7 +31,7 @@ with open('installed.txt') as installed:
                 real_pkg_name = line.split(':')[0]
                 reason = ((line.split(':')[4]).split(']')[0]+"]").strip()
 
-                if real_pkg_name == package:
+                if real_pkg_name == package and "FIXME" not in reason and "branding" not in reason and "technical" not in reason:
                     f3.write(package+" > "+reason+"\n")
                     countproprietary +=1
                     break
