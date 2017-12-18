@@ -47,5 +47,5 @@ After installing Python 2, install dependencies: `pip install -r requirements.tx
 
 Your GNU/Linux is infected with 49 proprietary packages out of 1084 total installed. Your Stallman Freedom Index is 95.48.
 
-The proprietary packages have been saved as disgusting.txt
+The proprietary packages have been saved as /tmp/absolutely-proprietary/disgusting.txt
 ```
