@@ -44,4 +44,4 @@ cprint(figlet_format(('%s ABSOLUTELY PROPRIETARY PACKAGES' % (countproprietary))
 total=int(subprocess.check_output(['bash', '-c', 'pacman -Q | wc -l', 'shell=True']))
 stallmanfreedomindex=(total-countproprietary)*100/total
 print("Your GNU/Linux is infected with %s proprietary packages out of %s total installed. Your Stallman Freedom Index is %.2f.\n") % (countproprietary,total,stallmanfreedomindex)
-print("The proprietary packages have been saved as disgusting.txt")
+print("The proprietary packages have been saved as /tmp/absolutely-proprietary/disgusting.txt")
