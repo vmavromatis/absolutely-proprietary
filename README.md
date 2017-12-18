@@ -1,6 +1,12 @@
 # Absolutely Proprietary
 Compare your installed packages against Parabola's package blacklist
 
+# Dependencies
+* Python 2
+* `colorama`, `termcolor`, and `pyfiglet`.
+
+After installing Python 2, install dependencies: `pip install -r requirements.txt`
+
 # Example output
 ```
 discover::::[uses-nonfree][FIXME:package] depends on nonfree archlinux-appstream-data
