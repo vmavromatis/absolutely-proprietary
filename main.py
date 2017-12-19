@@ -43,12 +43,13 @@ print("Checking packages")
 cleaned_blacklist = {}
 
 for line in blacklist:
-    name = line.split(':')[0]
-    reason = ((line.split(':')[4]).split(']')[0]).strip().replace('[', '')
-    if reason == "":
-        reason = "nonfree"
-    if not reason in IGNORE_REASONS:
-        cleaned_blacklist[name] = reason
+    if len(line) > 0:
+        name = line.split(':')[0]
+        reason = ((line.split(':')[4]).split(']')[0]).strip().replace('[', '')
+        if reason == "":
+            reason = "nonfree"
+        if not reason in IGNORE_REASONS:
+            cleaned_blacklist[name] = reason
 
 proprietary = 0
 
