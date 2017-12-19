@@ -44,6 +44,8 @@ cleaned_blacklist = {}
 
 for line in blacklist:
     name = line.split(':')[0]
+    if not line:
+        continue
     reason = ((line.split(':')[4]).split(']')[0]).strip().replace('[', '')
     if reason == "":
         reason = "nonfree"
