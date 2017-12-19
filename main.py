@@ -22,7 +22,8 @@ GREEN = "\033[1;32m" if IS_TTY else ""
 RESET = "\033[0m" if IS_TTY else ""
 
 # Get local installed packages
-print("Listing packages...")
+print("Listing packages")
+
 packages = subprocess.check_output(["pacman", "-Qq"]).decode().strip().split('\n')
 
 if not os.path.isfile("blacklist.txt"):
@@ -33,8 +34,11 @@ if not os.path.isfile("blacklist.txt"):
             blacklist_file.write(urllib.request.urlopen(url).read().decode())
 
 print("Parsing blacklist.txt")
+
 with open("blacklist.txt") as f:
     blacklist = f.read().strip().split('\n')
+
+print("Checking packages")
 
 cleaned_blacklist = {}
 
