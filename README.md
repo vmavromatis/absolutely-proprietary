@@ -1,6 +1,8 @@
 # Absolutely Proprietary
 Proprietary package detector. Compares your installed packages against Parabola's package blacklist and then prints your Stallman Freedom Index.
 
+*Update - I thought it's better to remove all the ascii stuff so there are no external libs. Thanks for the PRs!*
+
 # Quick install & run
 `sudo pacman -S python && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && python main.py`
 
