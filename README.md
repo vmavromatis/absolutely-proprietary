@@ -9,11 +9,7 @@ Once done, you may run `less disgusting.txt` to view the detailed results. Expla
 - *semifree*: This package is mostly free, but contains some nonfree software.
 - *uses-nonfree*: This package depends on, recommends, or otherwise inappropriately integrates with other nonfree software or services.
 
-# Dependencies
-* `python`
-
-
-# Example output
+# Output
 ```
 -====================-
 34 ABSOLUTELY PROPRIETARY PACKAGES INSTALLED
