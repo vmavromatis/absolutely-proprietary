@@ -4,7 +4,7 @@ Proprietary package detector. Compares your installed packages against Parabola'
 *Update - I thought it's better to remove all the ascii stuff so there are no external libs. Thanks for the PRs!*
 
 # Quick install & run
-`sudo pacman -S python && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && python main.py`
+`curl -o - https://raw.githubusercontent.com/vmavromatis/absolutely-proprietary/master/run.sh | sh`
 
 Once done, you may run `less disgusting.txt` to view the detailed results. Explanation of terms:
 - *nonfree*: This package is blatantly nonfree software.
