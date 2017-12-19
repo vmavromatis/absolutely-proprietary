@@ -4,7 +4,7 @@ Proprietary package detector. Compares your installed packages against Parabola'
 # Quick install & run
 `sudo pacman -S python && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && python main.py`
 
-Once done, you may run `less isgusting.txt` to view the detailed results. Explanation of terms:
+Once done, you may run `less disgusting.txt` to view the detailed results. Explanation of terms:
 - *nonfree*: This package is blatantly nonfree software.
 - *semifree*: This package is mostly free, but contains some nonfree software.
 - *uses-nonfree*: This package depends on, recommends, or otherwise inappropriately integrates with other nonfree software or services.
