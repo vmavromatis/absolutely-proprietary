@@ -1,5 +1,5 @@
 # Absolutely Proprietary
-Proprietary package detector. Compares your installed packages against Parabola's package blacklist and then prints your Stallman Freedom Index.
+Proprietary package detector for arch-based distros. Compares your installed packages against Parabola's package blacklist and then prints your Stallman Freedom Index (free/total).
 
 *Update - I thought it's better to remove all the ascii stuff so there are no external libs. Thanks for the PRs!*
 
