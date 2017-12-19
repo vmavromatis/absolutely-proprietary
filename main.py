@@ -1,51 +1,73 @@
-from __future__ import division
 import sys
+import os
 import subprocess
-import urllib2
-from colorama import init
+import urllib.request
 
-init(strip=not sys.stdout.isatty())  # strip colors if stdout is redirected
-from termcolor import cprint
-from pyfiglet import figlet_format
+BLACKLIST_URLS = [
+    "https://git.parabola.nu/blacklist.git/plain/blacklist.txt",
+    "https://git.parabola.nu/blacklist.git/plain/aur-blacklist.txt"
+]
+
+IGNORE_REASONS = [
+    "FIXME",
+    "branding",
+    "technical"
+]
+
+IS_TTY = sys.stdout.isatty()
+
+RED = "\033[1;31m" if IS_TTY else ""
+YELLOW = "\033[1;33m" if IS_TTY else ""
+GREEN = "\033[1;32m" if IS_TTY else ""
+RESET = "\033[0m" if IS_TTY else ""
 
 # Get local installed packages
-f1 = open("installed.txt", "w+")
-f1.write(subprocess.check_output(['bash', '-c', 'pacman -Qq', 'shell=True']))
-f1.close()
+print("Listing packages...")
+packages = subprocess.check_output(["pacman", "-Qq"]).decode().strip().split('\n')
 
-# Get Parabola blacklist+AUR
-f2 = open("blacklist.txt", "w+")
-f2.write(urllib2.urlopen('https://git.parabola.nu/blacklist.git/plain/blacklist.txt').read())
-f2.write(urllib2.urlopen('https://git.parabola.nu/blacklist.git/plain/aur-blacklist.txt').read())
-f2.close()
+if not os.path.isfile("blacklist.txt"):
+    print("blacklist.txt not found, generating")
+    with open("blacklist.txt", "w+") as blacklist_file:
+        for url in BLACKLIST_URLS:
+            print("Downloading {}".format(url))
+            blacklist_file.write(urllib.request.urlopen(url).read().decode())
+
+print("Parsing blacklist.txt")
+with open("blacklist.txt") as f:
+    blacklist = f.read().strip().split('\n')
+
+cleaned_blacklist = {}
+
+for line in blacklist:
+    name = line.split(':')[0]
+    reason = ((line.split(':')[4]).split(']')[0]).strip().replace('[', '')
+    if reason == "":
+        reason = "nonfree"
+    if not reason in IGNORE_REASONS:
+        cleaned_blacklist[name] = reason
+
+proprietary = 0
 
 # Generate proprietary list
-f3 = open("disgusting.txt", "w+")
-
-# Compare lists
-countproprietary = 0
-with open('installed.txt') as installed:
-    for package in installed:
+with open("disgusting.txt", "w+") as stallman_disapproves:
+    for package in packages:
         package = package.strip()
-        with open("blacklist.txt") as f:
-            for line in f:
-                # Find package names in blacklist
-                real_pkg_name = line.split(':')[0]
-                reason = ((line.split(':')[4]).split(']')[0] + "]").strip()
-                if reason == "]": reason="[nonfree]"  # fix for empty reason
-                if real_pkg_name == package and "FIXME" not in reason and "branding" not in reason and "technical" not in reason:
-                    f3.write(package + " > " + reason + "\n")
-                    countproprietary += 1
-                    break
-f3.close()
+        if package in cleaned_blacklist:
+            stallman_disapproves.write("{}: {}\n".format(package, cleaned_blacklist[package]))
+            proprietary += 1
+
+total = len(packages)
+stallmanfreedomindex = (total - proprietary) * 100 / total
+
+if stallmanfreedomindex > 95:
+    INDEX_COLOR = GREEN
+elif stallmanfreedomindex > 25:
+    INDEX_COLOR = YELLOW
+else:
+    INDEX_COLOR = RED
 
 # Print results
-cprint(figlet_format(('%s ABSOLUTELY PROPRIETARY PACKAGES' % (countproprietary)), font='univers', width=160),
-       'green', attrs=['bold'])
-
-total = int(subprocess.check_output(['bash', '-c', 'pacman -Q | wc -l', 'shell=True']))
-stallmanfreedomindex = (total - countproprietary) * 100 / total
-print(
-     "Your GNU/Linux is infected with %s proprietary packages out of %s total installed. Your Stallman Freedom Index is %.2f.\n") % (
-     countproprietary, total, stallmanfreedomindex)
-print("The proprietary packages have been saved as /tmp/absolutely-proprietary/disgusting.txt")
+print("\n{0}-{1}-\n{2} ABSOLUTELY PROPRIETARY PACKAGES INSTALLED\n-{1}-{3}".format(INDEX_COLOR, "=" * 20, proprietary, RESET))
+print("Your GNU/Linux is infected with {1}{3}{2} proprietary packages out of {0}{4}{2} total installed. Your Stallman Freedom Index is {1}{5:.2f}{2}"
+        .format(GREEN, INDEX_COLOR, RESET, proprietary, total, stallmanfreedomindex))
+print("The proprietary packages have been saved to disgusting.txt")

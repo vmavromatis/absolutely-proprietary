@@ -1,3 +1,0 @@
-colorama
-termcolor
-pyfiglet
