@@ -26,23 +26,17 @@ print("Listing packages")
 
 packages = subprocess.check_output(["pacman", "-Qq"]).decode().strip().split('\n')
 
-if not os.path.isfile("blacklist.txt"):
-    print("blacklist.txt not found, generating")
-    with open("blacklist.txt", "w+") as blacklist_file:
-        for url in BLACKLIST_URLS:
-            print("Downloading {}".format(url))
-            blacklist_file.write(urllib.request.urlopen(url).read().decode())
+blacklist_list = []
+for url in BLACKLIST_URLS:
+    print("Downloading {}".format(url))
+    blacklist_list.extend(urllib.request.urlopen(url).read().decode().strip().split('\n'))
 
-print("Parsing blacklist.txt")
-
-with open("blacklist.txt") as f:
-    blacklist = f.read().strip().split('\n')
-
+blacklist_list = [bl for bl in blacklist_list if len(bl) > 0]
 print("Checking packages")
 
 cleaned_blacklist = {}
 
-for line in blacklist:
+for line in blacklist_list:
     if len(line) > 0:
         name = line.split(':')[0]
         reason = ((line.split(':')[4]).split(']')[0]).strip().replace('[', '')
