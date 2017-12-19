@@ -2,6 +2,9 @@
 Proprietary package detector. Compares your installed packages against Parabola's package blacklist and then prints your Stallman Freedom Index.
 
 # Quick install & run
+### Python 3
+`sudo pacman -S python python-pip --needed && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && sudo pip install -r requirements.txt && python main.py`
+### Python 2
 `sudo pacman -S python2 python2-pip --needed && cd /tmp && git clone https://github.com/vmavromatis/absolutely-proprietary.git && cd absolutely-proprietary && sudo pip2 install -r requirements.txt && python2 main.py`
 
 Once done, you may run `less /tmp/absolutely-proprietary/disgusting.txt` to view the detailed results. Explanation of terms:
@@ -10,10 +13,14 @@ Once done, you may run `less /tmp/absolutely-proprietary/disgusting.txt` to view
 - *[uses-nonfree]*: This package depends on, recommends, or otherwise inappropriately integrates with other nonfree software or services.
 
 # Dependencies
+### Python 3
+* `python` and `python-pip`.
+* `colorama`, `termcolor`, `pyfiglet` and `wget`.
+### Python 2
 * `python2` and `python2-pip`.
-*  `colorama`, `termcolor`, and `pyfiglet`.
+* `colorama`, `termcolor`, `pyfiglet` and `wget`.
 
-After installing Python 2, install dependencies: `pip install -r requirements.txt`
+After installing Python, install dependencies: `pip install -r requirements.txt` or `pip2 install -r requirements.txt` depending on your Python version.
 
 # Example output
 ```
