@@ -1,7 +1,7 @@
 from __future__ import division
 import sys
 import subprocess
-import urllib2
+import wget
 from colorama import init
 
 init(strip=not sys.stdout.isatty())  # strip colors if stdout is redirected
@@ -10,14 +10,19 @@ from pyfiglet import figlet_format
 
 # Get local installed packages
 f1 = open("installed.txt", "w+")
-f1.write(subprocess.check_output(['bash', '-c', 'pacman -Qq', 'shell=True']))
+f1.write(subprocess.check_output(['bash', '-c', 'pacman -Qq', 'shell=True']).decode("utf-8"))
 f1.close()
 
 # Get Parabola blacklist+AUR
-f2 = open("blacklist.txt", "w+")
-f2.write(urllib2.urlopen('https://git.parabola.nu/blacklist.git/plain/blacklist.txt').read())
-f2.write(urllib2.urlopen('https://git.parabola.nu/blacklist.git/plain/aur-blacklist.txt').read())
-f2.close()
+bl_url = 'https://git.parabola.nu/blacklist.git/plain/blacklist.txt'
+aurbl_url = 'https://git.parabola.nu/blacklist.git/plain/aur-blacklist.txt'
+wget.download(bl_url, 'blacklist.txt')
+wget.download(aurbl_url, 'aur-blacklist.txt')
+
+with open("blacklist.txt", "a") as f:
+    with open("aur-blacklist.txt") as f2:
+        for line in f2:
+            f.write(line)
 
 # Generate proprietary list
 f3 = open("disgusting.txt", "w+")
@@ -43,9 +48,9 @@ f3.close()
 cprint(figlet_format(('%s ABSOLUTELY PROPRIETARY PACKAGES' % (countproprietary)), font='univers', width=160),
        'green', attrs=['bold'])
 
-total = int(subprocess.check_output(['bash', '-c', 'pacman -Q | wc -l', 'shell=True']))
+total = int(subprocess.check_output(['bash', '-c', 'pacman -Q | wc -l', 'shell=True']).decode("utf-8"))
 stallmanfreedomindex = (total - countproprietary) * 100 / total
 print(
-     "Your GNU/Linux is infected with %s proprietary packages out of %s total installed. Your Stallman Freedom Index is %.2f.\n") % (
-     countproprietary, total, stallmanfreedomindex)
+        "Your GNU/Linux is infected with {} proprietary packages out of {} total installed. Your Stallman Freedom Index is {:.2f}.\n".format(
+     countproprietary, total, stallmanfreedomindex))
 print("The proprietary packages have been saved as /tmp/absolutely-proprietary/disgusting.txt")
