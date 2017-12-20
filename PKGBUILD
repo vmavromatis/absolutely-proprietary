@@ -19,11 +19,6 @@ pkgver() {
 }
 
 package() {
-    cd "$srcdir/${_pkgname}-master"
-    install -Dm755 main.py "$pkgdir/usr/bin/${_pkgname}"
-}
-
-package() {
   cd "${_gitname}"
   python setup.py install --prefix=/usr --root="$pkgdir/" --optimize=1
   install -Dm644 "$srcdir/${_gitname}/LICENSE.md" \
