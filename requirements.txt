@@ -1,1 +1,1 @@
-PrettyTable
+prettytable
