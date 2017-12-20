@@ -1,7 +1,6 @@
 import sys
 import subprocess
 import urllib.request
-import re
 from prettytable import PrettyTable
 
 def format_entry(entry, max_line_length, delim=" "):
@@ -37,9 +36,9 @@ IGNORE_REASONS = [
 
 IS_TTY = sys.stdout.isatty()
 
-RED = "\033[1;31m" if IS_TTY else ""
-YELLOW = "\033[1;33m" if IS_TTY else ""
-GREEN = "\033[1;32m" if IS_TTY else ""
+RED = "\033[0;31m" if IS_TTY else ""
+YELLOW = "\033[0;33m" if IS_TTY else ""
+GREEN = "\033[0;32m" if IS_TTY else ""
 RESET = "\033[0m" if IS_TTY else ""
 
 # Get local installed packages
@@ -87,7 +86,7 @@ for line in blacklist_list:
         if reason == "":
             reason = "nonfree"
         if not reason in IGNORE_REASONS:
-            cleaned_blacklist[name] = [reason, alternatives, desc]
+            cleaned_blacklist[name] = [reason, desc, alternatives ]
 
 proprietary = 0
 
@@ -111,10 +110,12 @@ else:
 
 # Print results
 print("{0}{1}\n{2} ABSOLUTELY PROPRIETARY PACKAGES INSTALLED\n{1}{3}".format(INDEX_COLOR, "=" * 45, proprietary, RESET))
-print("\nYour GNU/Linux is infected with {1}{3}{2} proprietary packages out of {0}{4}{2} total installed.\nYour Stallman Freedom Index is {1}{5:.2f}{2}\n"
-        .format(GREEN, INDEX_COLOR, RESET, proprietary, total, stallmanfreedomindex))
+print("\nYour GNU/Linux is infected with {0}{2}{1} proprietary packages out of {0}{3}{1} total installed.\nYour Stallman Freedom Index is {0}{4:.2f}{1}\n"
+        .format(INDEX_COLOR, RESET, proprietary, total, stallmanfreedomindex))
 
-table = PrettyTable(['Name', 'Status', 'Alternatives', 'Description'])
+table = PrettyTable(['Name', 'Status', 'Description', 'Libre Alternatives'])
+table.hrules=1
+table.align='l'
 for package in stallman_disapproves:
     table.add_row(package)
 
