@@ -66,7 +66,7 @@ else:
 
 # Print results
 print("{0}{1}\n{2} ABSOLUTELY PROPRIETARY PACKAGES INSTALLED\n{1}{3}".format(INDEX_COLOR, "=" * 45, proprietary, RESET))
-print("\nYour GNU/Linux is infected with {1}{3}{2} proprietary packages out of {0}{4}{2} total installed. Your Stallman Freedom Index is {1}{5:.2f}{2}\n"
+print("\nYour GNU/Linux is infected with {1}{3}{2} proprietary packages out of {0}{4}{2} total installed.\nYour Stallman Freedom Index is {1}{5:.2f}{2}\n"
         .format(GREEN, INDEX_COLOR, RESET, proprietary, total, stallmanfreedomindex))
 
 for package in stallman_disapproves:
