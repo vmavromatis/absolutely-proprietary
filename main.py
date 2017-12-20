@@ -3,6 +3,7 @@ import sys
 import subprocess
 import urllib.request
 from prettytable import PrettyTable
+import argparse
 
 def format_entry(entry, max_line_length, delim=" "):
     #accumulated line length
@@ -23,6 +24,14 @@ def format_entry(entry, max_line_length, delim=" "):
             ACC_length = len(word) + 1
     formatted_entry = formatted_entry[:-1]
     return formatted_entry
+
+parser = argparse.ArgumentParser(description='Find proprietary packages')
+parser.add_argument('-f', '--full', action='store_true', help='Print every package not just nonfree')
+parser.add_argument('-r', '--reverse', action='store_true', help='Reverse the sort')
+sort_group = parser.add_mutually_exclusive_group()
+sort_group.add_argument('-s', '--status', action='store_true', help='Sort the table by the status column')
+sort_group.add_argument('-a', '--alternative', action='store_true', help='Sort the table by the alternative column')
+args = parser.parse_args()
 
 BLACKLIST_URLS = [
     "https://git.parabola.nu/blacklist.git/plain/blacklist.txt",
@@ -118,6 +127,15 @@ table = PrettyTable(['Name', 'Status', 'Description', 'Libre Alternatives'])
 table.hrules=1
 table.align='l'
 for package in stallman_disapproves:
+    if package[1] != 'nonfree' and not args.full:
+        continue
     table.add_row(package)
+
+if args.status:
+    table = table.get_string(sortby="Status", reversesort=args.reverse)
+elif args.alternative:
+    table = table.get_string(sortby="Libre Alternatives", reversesort=args.reverse)
+else:
+    table = table.get_string(sortby="Name", reversesort=args.reverse)
 
 print(table)
