@@ -3,46 +3,15 @@
 pkgname=absolutely-proprietary
 pkgver=1
 pkgrel=1
-epoch=
-pkgdesc=""
-arch=()
-url=""
+pkgdesc="Proprietary package detector for arch-based distros."
+arch=('any')
+url="https://github.com/vmavromatis/absolutely-proprietary"
 license=('GPL3')
-groups=()
-depends=()
-makedepends=()
-checkdepends=()
-optdepends=()
-provides=()
-conflicts=()
-replaces=()
-backup=()
-options=()
-install=
-changelog=
-source=("$pkgname-$pkgver.tar.gz"
-        "$pkgname-$pkgver.patch")
-noextract=()
-md5sums=()
-validpgpkeys=()
-
-prepare() {
-	cd "$pkgname-$pkgver"
-	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
-}
-
-build() {
-	cd "$pkgname-$pkgver"
-	./configure --prefix=/usr
-	make
-}
-
-check() {
-	cd "$pkgname-$pkgver"
-	make -k check
-}
+depends=('python>=3.6.3')
+source=("https://github.com/vmavromatis/absolutely-proprietary/releases/downliad/$pkgver/<to_be_filled_out>")
+sha256sums=("<to_be_filled_out>")
 
 package() {
-	cd "$pkgname-$pkgver"
-	make DESTDIR="$pkgdir/" install
+  cd "$srcdir"
+  install -Dm755 main.py "$pkgdir/usr/bin/absolutely-proprietary"
 }
