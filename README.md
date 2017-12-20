@@ -13,9 +13,53 @@ Explanation of terms:
 
 # Output
 ```
--====================-
-34 ABSOLUTELY PROPRIETARY PACKAGES INSTALLED
--====================-
-Your GNU/Linux is infected with 34 proprietary packages out of 1504 total installed. Your Stallman Freedom Index is 97.74
-The proprietary packages have been saved to disgusting.txt
+Retrieving local packages (including AUR)...
+Downloading https://git.parabola.nu/blacklist.git/plain/blacklist.txt
+Downloading https://git.parabola.nu/blacklist.git/plain/aur-blacklist.txt
+Comparing local packages to remote...
+=============================================
+39 ABSOLUTELY PROPRIETARY PACKAGES INSTALLED
+=============================================
+
+Your GNU/Linux is infected with 39 proprietary packages out of 1090 total installed. Your Stallman Freedom Index is 96.42
+
+archlinux-appstream-data: uses-nonfree
+b43-fwcutter: uses-nonfree
+cdrtools: semifree
+chromium: uses-nonfree
+cpupower: semifree
+cups-filters: uses-nonfree
+electron: semifree
+faac: nonfree
+file-roller: uses-nonfree
+firefox: uses-nonfree
+flashplugin: nonfree
+gst-plugins-bad: uses-nonfree
+hexchat: uses-nonfree
+hplip: uses-nonfree
+intel-ucode: nonfree
+ipw2100-fw: nonfree
+ipw2200-fw: nonfree
+lib32-mesa-demos: semifree
+lib32-nvidia-utils: nonfree
+licenses: use-nonfree
+linux-api-headers: semifree
+linux-firmware: semifree
+mc: uses-nonfree
+mesa: uses-nonfree
+mesa-demos: semifree
+nvidia-utils: nonfree
+p7zip: semifree
+pepper-flash: nonfree
+phpstorm: nonfree
+pyqt5-common: uses-nonfree
+python-pyqt5: uses-nonfree
+sdl: semifree
+teamviewer: nonfree
+unace: nonfree
+unrar: nonfree
+unzip: semifree
+visual-studio-code: nonfree
+winetricks: uses-nonfree
+zd1211-firmware: uses-nonfree
 ```
