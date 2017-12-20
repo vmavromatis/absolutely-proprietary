@@ -21,45 +21,93 @@ Comparing local packages to remote...
 39 ABSOLUTELY PROPRIETARY PACKAGES INSTALLED
 =============================================
 
-Your GNU/Linux is infected with 39 proprietary packages out of 1090 total installed. Your Stallman Freedom Index is 96.42
+Your GNU/Linux is infected with 39 proprietary packages out of 1091 total installed.
+Your Stallman Freedom Index is 96.43
 
-archlinux-appstream-data: uses-nonfree
-b43-fwcutter: uses-nonfree
-cdrtools: semifree
-chromium: uses-nonfree
-cpupower: semifree
-cups-filters: uses-nonfree
-electron: semifree
-faac: nonfree
-file-roller: uses-nonfree
-firefox: uses-nonfree
-flashplugin: nonfree
-gst-plugins-bad: uses-nonfree
-hexchat: uses-nonfree
-hplip: uses-nonfree
-intel-ucode: nonfree
-ipw2100-fw: nonfree
-ipw2200-fw: nonfree
-lib32-mesa-demos: semifree
-lib32-nvidia-utils: nonfree
-licenses: use-nonfree
-linux-api-headers: semifree
-linux-firmware: semifree
-mc: uses-nonfree
-mesa: uses-nonfree
-mesa-demos: semifree
-nvidia-utils: nonfree
-p7zip: semifree
-pepper-flash: nonfree
-phpstorm: nonfree
-pyqt5-common: uses-nonfree
-python-pyqt5: uses-nonfree
-sdl: semifree
-teamviewer: nonfree
-unace: nonfree
-unrar: nonfree
-unzip: semifree
-visual-studio-code: nonfree
-winetricks: uses-nonfree
-zd1211-firmware: uses-nonfree
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| Name                     | Status       | Description                                                                               | Libre Alternatives            |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| archlinux-appstream-data | uses-nonfree | [FIXME:package] promotes nonfree packages and Arch repositories                           |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| b43-fwcutter             | uses-nonfree | only useful to install nonfree software                                                   | b43-tools,fsf,b43-fwcutter    |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| cdrtools                 | semifree     | Apple's license binding with no clarification (apple_driver utility is nonfree)           | cdrkit                        |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| chromium                 | uses-nonfree | [technical][FIXME:package] (1) links to proprietary plugins (2) probably not entirely     |                               |
+|                          |              | built from sources                                                                        |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| cpupower                 | semifree     | (linux-tools) Build from the Linux-libre kernel                                           | linux-libre-tools-cpupower    |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| cups-filters             | uses-nonfree | recommends foomatic-db-nonfree                                                            | cups-filters                  |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| electron                 | semifree     | [FIXME:package] contains embedded Chromium, recommends nonfree modules                    |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| faac                     | nonfree      | [FIXME:description] is a GPL'ed package, but has non free code that can't be distributed  |                               |
+|                          |              | under the GPL                                                                             |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| file-roller              | uses-nonfree | recommends nonfree unrar and unace installation                                           | file-roller                   |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| firefox                  | uses-nonfree | Has trademark issues, recommends nonfree software and by default has non-privacy search   |                               |
+|                          |              | engines                                                                                   |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| flashplugin              | nonfree      | nonfree, nondistributable, built from binary installers, etc                              |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| gst-plugins-bad          | uses-nonfree | depends on nonfree package faac                                                           | gst-plugins-bad               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| hexchat                  | uses-nonfree | Hard-codes the firefox command in some menus                                              | hexchat                       |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| hplip                    | uses-nonfree | recommends binary blobs                                                                   | hplip                         |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| intel-ucode              | nonfree      | no modification, use restrictions                                                         |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| ipw2100-fw               | nonfree      |                                                                                           |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| ipw2200-fw               | nonfree      |                                                                                           |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| lib32-mesa-demos         | semifree     | The 'pointblast' and 'spriteblast' demos are nonfree                                      | lib32-mesa-demos              |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| lib32-nvidia-utils       | nonfree      | nonfree, nondistributable, built from binary installers, etc                              |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| licenses                 | use-nonfree  | Remove non-free CC -NC and -ND licenses (also add WTFPL)                                  | licenses                      |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| linux-api-headers        | semifree     | has source containing and recommending nonfree software, [[issue444]]                     | linux-libre-api-headers       |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| linux-firmware           | semifree     | nonfree blobs and firmwares                                                               | linux-libre-firmware,fsf,     |
+|                          |              |                                                                                           | linux-firmware                |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| mc                       | uses-nonfree | recommends nonfree unace, unrar and unarj optional installation                           | mc                            |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| mesa                     | uses-nonfree | (mesa) Recommends nonfree software in /etc/drirc                                          | mesa                          |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| mesa-demos               | semifree     | The 'pointblast' and 'spriteblast' demos are nonfree                                      | mesa-demos,fsf,mesademos      |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| nvidia-utils             | nonfree      | nonfree, nondistributable, built from binary installers, etc                              |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| p7zip                    | semifree     | contains nonfree unrar                                                                    | p7zip                         |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| pepper-flash             | nonfree      | proprietary Adobe Computer Software License Agreement, missing sources                    |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| phpstorm                 | nonfree      |                                                                                           |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| pyqt5-common             | uses-nonfree | depends on nonfree qt5-webengine                                                          | pyqt5-common                  |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| python-pyqt5             | uses-nonfree | depends on nonfree qt5-webengine                                                          | python-pyqt5                  |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| sdl                      | semifree     | contains a source file that doesn't mention modification                                  | sdl                           |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| teamviewer               | nonfree      |                                                                                           |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| unace                    | nonfree      | license forbids making competing ACE archivers from unace                                 |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| unrar                    | nonfree      |                                                                                           | unar,fsf,unrar                |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| unzip                    | semifree     | contains a source file that doesn't mention modification                                  | unzip                         |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| visual-studio-code       | nonfree      |                                                                                           |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| winetricks               | uses-nonfree | recommends and installs nonfree software                                                  | winetricks-libre,parabola,366 |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+| zd1211-firmware          | uses-nonfree | it's free, but drivers are propietary and it's not included in linux-libre                |                               |
++--------------------------+--------------+-------------------------------------------------------------------------------------------+-------------------------------+
+
 ```
