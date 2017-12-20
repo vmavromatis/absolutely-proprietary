@@ -1,17 +1,31 @@
-# Maintainer : vmavromatis <8668731+vmavromatis@users.noreply.github.com>
-# Contributor : stiefel40k 
-pkgname=absolutely-proprietary
-pkgver=1
+# Maintainer : vmavromatis <bill.mavromatis@protonmail.com>
+# Contributors : https://github.com/vmavromatis/absolutely-proprietary/graphs/contributors
+_pkgname=absolutely-proprietary
+pkgname=${_pkgname}-git
+pkgver=r54.93d1c3e
 pkgrel=1
 pkgdesc="Proprietary package detector for arch-based distros."
 arch=('any')
-url="https://github.com/vmavromatis/absolutely-proprietary"
+url="https://github.com/vmavromatis/${_pkgname}"
 license=('GPL3')
-depends=('python>=3.6.3')
-source=("https://github.com/vmavromatis/absolutely-proprietary/releases/downliad/$pkgver/<to_be_filled_out>")
-sha256sums=("<to_be_filled_out>")
+depends=('python'
+         'python-setuptools')
+source=("git+https://github.com/vmavromatis/${_pkgname}.git")
+md5sums=('SKIP')
+
+pkgver() {
+    cd "${_gitname}"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
 
 package() {
-  cd "$srcdir"
-  install -Dm755 main.py "$pkgdir/usr/bin/absolutely-proprietary"
+    cd "$srcdir/${_pkgname}-master"
+    install -Dm755 main.py "$pkgdir/usr/bin/${_pkgname}"
+}
+
+package() {
+  cd "${_gitname}"
+  python setup.py install --prefix=/usr --root="$pkgdir/" --optimize=1
+  install -Dm644 "$srcdir/${_gitname}/LICENSE.md" \
+                 "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
