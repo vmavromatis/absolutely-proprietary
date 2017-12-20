@@ -9,5 +9,6 @@ else
     git clone https://github.com/vmavromatis/absolutely-proprietary.git
     cd absolutely-proprietary
 fi
-    python main.py
+pip install -r requirements.txt -U
+python main.py
 
