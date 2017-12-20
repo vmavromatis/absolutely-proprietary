@@ -6,7 +6,7 @@ Proprietary package detector for arch-based distros. Compares your installed pac
 # Quick install & run
 `curl -o - https://raw.githubusercontent.com/vmavromatis/absolutely-proprietary/master/run.sh | sh`
 
-Once done, you may run `less disgusting.txt` to view the detailed results. Explanation of terms:
+Explanation of terms:
 - *nonfree*: This package is blatantly nonfree software.
 - *semifree*: This package is mostly free, but contains some nonfree software.
 - *uses-nonfree*: This package depends on, recommends, or otherwise inappropriately integrates with other nonfree software or services.
