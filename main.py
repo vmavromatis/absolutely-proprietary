@@ -62,27 +62,19 @@ cleaned_blacklist = {}
 for line in blacklist_list:
     if len(line) > 0:
         splitted = line.split(':')
-
         name = splitted[0]
         reason = ((line.split(':')[4]).split(']')[0]).strip().replace('[', '')
-
         alternatives = []
         for alt in splitted[1:]:
             if len(alt) > 0 and "[" not in alt:
                 alternatives.append(alt.strip())
             else:
                 break
-        if len(alternatives) > 0:
-            alternatives = ','.join(alternatives)
-        else:
-            alternatives = ''
-
         desc = ''
         reason_index = line.find(reason + "]")
         if reason_index != -1:
             desc = line[reason_index + len(reason) + 1:]
             desc = desc.strip()
-
         if reason == "":
             reason = "nonfree"
         if reason not in IGNORE_REASONS:
@@ -162,8 +154,9 @@ for item in stallman_disapproves:
         package_len = len(item[0])
     if len(item[1]) > status_len:
         status_len = len(item[1])
-    if len(item[2]) > alternative_len:
-        alternative_len = len(item[2])
+    for sub in item[2]:
+        if len(sub) > alternative_len:
+            alternative_len = len(sub)
     if len(item[3]) > description_len:
         description_len = len(item[3])
 
@@ -188,11 +181,34 @@ with open(tmp_file, "w") as f:
     # Print rest of the table
     for item in stallman_disapproves:
         # print element
-        f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
-                .format(item[0], package_len,
-                        item[1], status_len,
-                        item[2], alternative_len,
-                        item[3], description_len))
+        first = True
+        if len(item[2]) > 1:
+            for sub in item[2]:
+                if first:
+                    f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
+                            .format(item[0], package_len,
+                                    item[1], status_len,
+                                    sub, alternative_len,
+                                    item[3], description_len))
+                    first = False
+                else:
+                    f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
+                            .format("", package_len,
+                                    "", status_len,
+                                    sub, alternative_len,
+                                    "", description_len))
+        elif len(item[2]) == 1:
+            f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
+                    .format(item[0], package_len,
+                            item[1], status_len,
+                            item[2][0], alternative_len,
+                            item[3], description_len))
+        else:
+            f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
+                    .format(item[0], package_len,
+                            item[1], status_len,
+                            "", alternative_len,
+                            item[3], description_len))
         # print horizontal separator
         f.write(line_separator(package_len,
                                status_len,
