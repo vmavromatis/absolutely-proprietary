@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys
+import os
 import subprocess
 import urllib.request
 import argparse
@@ -199,13 +200,42 @@ with open(tmp_file, "w") as f:
                                alternative_len))
 # Disable CLI line wrapping
 subprocess.call(["setterm", "-linewrap", "off"])
+# Print file
 subprocess.call(["cat", tmp_file])
 
+# Ask if file to be saved
 save_it = input("\nSave list to file? (Y/n) ")
 if "n" in save_it.lower():
+    # delete if no
     subprocess.call(["rm", "-f", tmp_file])
 else:
-    print("The list is saved at", tmp_file)
+    # ask for filename if yes
+    new_file = input("Save it to ({}): ".format(tmp_file))
+    if new_file == "":
+        new_file = tmp_file
+    else:
+        # get absolute path, treat tilde as user's home folder
+        new_file = os.path.abspath(os.path.expanduser(new_file))
+        # leave tmp_file if user doesn't have permission to create new dir
+        try:
+            os.makedirs(os.path.dirname(new_file), exist_ok=True)
+        except PermissionError:
+            print("You don't have the right permissions!")
+            new_file = tmp_file
+        # leave tmp_file if user doesn't have permission to create file
+    if tmp_file != new_file:
+        try:
+            # copy tmp_file to new_file
+            with open(new_file, "w") as nf:
+                with open(tmp_file) as tf:
+                    for line in tf:
+                        nf.write(line)
+        except PermissionError:
+            print("You don't have the right permissions!")
+            new_file = tmp_file
+
+    # Print save location and CLI view suggestions
+    print("The list is saved at", new_file)
     print("\nYou can review it from the command line\n"
           "using the \"less -S {0}\"\n"
-          "or, if installed, the \"most {0}\" commands".format(tmp_file))
+          "or, if installed, the \"most {0}\" commands".format(new_file))
