@@ -186,7 +186,7 @@ with open(tmp_file, "w") as f:
     for item in stallman_disapproves:
         # print element
         first = True
-        if len(item[2]) > 1:
+        if len(item[2]) > 0:
             for sub in item[2]:
                 if first:
                     f.write(table_row(item[0], package_len,
@@ -199,11 +199,6 @@ with open(tmp_file, "w") as f:
                                       "", status_len,
                                       sub, alternative_len,
                                       "", description_len))
-        elif len(item[2]) == 1:
-            f.write(table_row(item[0], package_len,
-                              item[1], status_len,
-                              item[2][0], alternative_len,
-                              item[3], description_len))
         else:
             f.write(table_row(item[0], package_len,
                               item[1], status_len,
