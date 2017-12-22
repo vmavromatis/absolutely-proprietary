@@ -6,27 +6,6 @@ import argparse
 import tempfile
 
 
-def format_entry(entry, max_line_length, delim=" "):
-    # accumulated line length
-    ACC_length = 0
-    words = entry.split(delim)
-    formatted_entry = ""
-    for word in words:
-        # if ACC_length + len(word) and a space is <= max_line_length
-        if ACC_length + (len(word) + 1) <= max_line_length:
-            # append the word and a space
-            formatted_entry = formatted_entry + word + delim
-            # length = length + length of word + length of space
-            ACC_length = ACC_length + len(word) + 1
-        else:
-            # append a line break, then the word and a space
-            formatted_entry = formatted_entry + "\n" + word + delim
-            # reset counter of length to the length of a word and a space
-            ACC_length = len(word) + 1
-    formatted_entry = formatted_entry[:-1]
-    return formatted_entry
-
-
 def line_separator(w, x, y, z):
     return "+-{:<{}}-+-{:<{}}-+-{:<{}}-+-{:<{}}-+\n" \
         .format("-" * w, w, "-" * x, x, "-" * y, y, "-" * z, z)
@@ -94,7 +73,6 @@ for line in blacklist_list:
                 break
         if len(alternatives) > 0:
             alternatives = ','.join(alternatives)
-            alternatives = format_entry(alternatives, 30, ",")
         else:
             alternatives = ''
 
@@ -103,8 +81,6 @@ for line in blacklist_list:
         if reason_index != -1:
             desc = line[reason_index + len(reason) + 1:]
             desc = desc.strip()
-
-        desc = format_entry(desc, 90)
 
         if reason == "":
             reason = "nonfree"
@@ -141,7 +117,6 @@ print("\nYour GNU/Linux is infected with {0}{2}{1} proprietary packages"
       "out of {0}{3}{1} total installed.\n"
       "Your Stallman Freedom Index is {0}{4:.2f}{1}\n"
       .format(INDEX_COLOR, RESET, proprietary, total, stallmanfreedomindex))
-
 
 # Leave only "nonfree" packages in list if "full" argument is not passed
 if not vars(args)["full"]:
@@ -182,11 +157,6 @@ status_len = len(header_status)
 description_len = len(header_description)
 alternative_len = len(header_alternative)
 for item in stallman_disapproves:
-    # replace newline characters with nothing
-    item[0] = item[0].replace("\n", "")
-    item[1] = item[1].replace("\n", "")
-    item[2] = item[2].replace("\n", "")
-    item[3] = item[3].replace("\n", "")
     if len(item[0]) > package_len:
         package_len = len(item[0])
     if len(item[1]) > status_len:
