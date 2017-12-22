@@ -85,8 +85,8 @@ for line in blacklist_list:
 
         if reason == "":
             reason = "nonfree"
-        if not reason in IGNORE_REASONS:
-            cleaned_blacklist[name] = [reason, desc, alternatives]
+        if reason not in IGNORE_REASONS:
+            cleaned_blacklist[name] = [reason, alternatives, desc]
 
 proprietary = 0
 
@@ -136,9 +136,9 @@ if vars(args)["status"]:
 if vars(args)["alternative"]:
     # check if "reverse" is passed
     if vars(args)["reverse"]:
-        stallman_disapproves.sort(key=lambda x: x[3], reverse=True)
+        stallman_disapproves.sort(key=lambda x: x[2], reverse=True)
     else:
-        stallman_disapproves.sort(key=lambda x: x[3])
+        stallman_disapproves.sort(key=lambda x: x[2])
 
 # Reverse sorting if "reverse" argument is passed
 # but "status" and "alternative" is not
@@ -162,10 +162,10 @@ for item in stallman_disapproves:
         package_len = len(item[0])
     if len(item[1]) > status_len:
         status_len = len(item[1])
-    if len(item[2]) > description_len:
-        description_len = len(item[2])
-    if len(item[3]) > alternative_len:
-        alternative_len = len(item[3])
+    if len(item[2]) > alternative_len:
+        alternative_len = len(item[2])
+    if len(item[3]) > description_len:
+        description_len = len(item[3])
 
 # Create a temporary file
 _, tmp_file = tempfile.mkstemp()
@@ -173,31 +173,31 @@ with open(tmp_file, "w") as f:
     # Print first horizontal separator of table
     f.write(line_separator(package_len,
                            status_len,
-                           description_len,
-                           alternative_len))
+                           alternative_len,
+                           description_len))
     # Print header
     f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
             .format(header_name, package_len,
                     header_status, status_len,
-                    header_description, description_len,
-                    header_alternative, alternative_len))
+                    header_alternative, alternative_len,
+                    header_description, description_len))
     f.write(line_separator(package_len,
                            status_len,
-                           description_len,
-                           alternative_len))
+                           alternative_len,
+                           description_len))
     # Print rest of the table
     for item in stallman_disapproves:
         # print element
         f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
                 .format(item[0], package_len,
                         item[1], status_len,
-                        item[2], description_len,
-                        item[3], alternative_len))
+                        item[2], alternative_len,
+                        item[3], description_len))
         # print horizontal separator
         f.write(line_separator(package_len,
                                status_len,
-                               description_len,
-                               alternative_len))
+                               alternative_len,
+                               description_len))
 # Disable CLI line wrapping
 subprocess.call(["setterm", "-linewrap", "off"])
 # Print file
