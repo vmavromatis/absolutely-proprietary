@@ -7,9 +7,14 @@ import argparse
 import tempfile
 
 
-def line_separator(w, x, y, z):
+def table_separator(w, x, y, z):
     return "+-{:<{}}-+-{:<{}}-+-{:<{}}-+-{:<{}}-+\n" \
         .format("-" * w, w, "-" * x, x, "-" * y, y, "-" * z, z)
+
+
+def table_row(i1, l1, i2, l2, i3, l3, i4, l4):
+    return "| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n" \
+        .format(i1, l1, i2, l2, i3, l3, i4, l4)
 
 
 parser = argparse.ArgumentParser(description='Find proprietary packages')
@@ -164,20 +169,19 @@ for item in stallman_disapproves:
 _, tmp_file = tempfile.mkstemp()
 with open(tmp_file, "w") as f:
     # Print first horizontal separator of table
-    f.write(line_separator(package_len,
-                           status_len,
-                           alternative_len,
-                           description_len))
+    f.write(table_separator(package_len,
+                            status_len,
+                            alternative_len,
+                            description_len))
     # Print header
-    f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
-            .format(header_name, package_len,
-                    header_status, status_len,
-                    header_alternative, alternative_len,
-                    header_description, description_len))
-    f.write(line_separator(package_len,
-                           status_len,
-                           alternative_len,
-                           description_len))
+    f.write(table_row(header_name, package_len,
+                      header_status, status_len,
+                      header_alternative, alternative_len,
+                      header_description, description_len))
+    f.write(table_separator(package_len,
+                            status_len,
+                            alternative_len,
+                            description_len))
     # Print rest of the table
     for item in stallman_disapproves:
         # print element
@@ -185,35 +189,31 @@ with open(tmp_file, "w") as f:
         if len(item[2]) > 1:
             for sub in item[2]:
                 if first:
-                    f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
-                            .format(item[0], package_len,
-                                    item[1], status_len,
-                                    sub, alternative_len,
-                                    item[3], description_len))
+                    f.write(table_row(item[0], package_len,
+                                      item[1], status_len,
+                                      sub, alternative_len,
+                                      item[3], description_len))
                     first = False
                 else:
-                    f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
-                            .format("", package_len,
-                                    "", status_len,
-                                    sub, alternative_len,
-                                    "", description_len))
+                    f.write(table_row("", package_len,
+                                      "", status_len,
+                                      sub, alternative_len,
+                                      "", description_len))
         elif len(item[2]) == 1:
-            f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
-                    .format(item[0], package_len,
-                            item[1], status_len,
-                            item[2][0], alternative_len,
-                            item[3], description_len))
+            f.write(table_row(item[0], package_len,
+                              item[1], status_len,
+                              item[2][0], alternative_len,
+                              item[3], description_len))
         else:
-            f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
-                    .format(item[0], package_len,
-                            item[1], status_len,
-                            "", alternative_len,
-                            item[3], description_len))
+            f.write(table_row(item[0], package_len,
+                              item[1], status_len,
+                              "", alternative_len,
+                              item[3], description_len))
         # print horizontal separator
-        f.write(line_separator(package_len,
-                               status_len,
-                               alternative_len,
-                               description_len))
+        f.write(table_separator(package_len,
+                                status_len,
+                                alternative_len,
+                                description_len))
 # Disable CLI line wrapping
 subprocess.call(["setterm", "-linewrap", "off"])
 # Print file
