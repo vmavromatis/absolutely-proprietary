@@ -172,10 +172,15 @@ if vars(args)["reverse"] \
     stallman_disapproves.sort(reverse=True)
 
 # Store longest element's length in each stallman_disapproves list item
-package_len = 0
-status_len = 0
-description_len = 0
-alternative_len = 0
+# starting values set to header elements
+header_name = "Name"
+header_status = "Status"
+header_description = "Description"
+header_alternative = "Libre Alternatives"
+package_len = len(header_name)
+status_len = len(header_status)
+description_len = len(header_description)
+alternative_len = len(header_alternative)
 for item in stallman_disapproves:
     # replace newline characters with nothing
     item[0] = item[0].replace("\n", "")
@@ -195,6 +200,16 @@ for item in stallman_disapproves:
 _, tmp_file = tempfile.mkstemp()
 with open(tmp_file, "w") as f:
     # Print first horizontal separator of table
+    f.write(line_separator(package_len,
+                           status_len,
+                           description_len,
+                           alternative_len))
+    # Print header
+    f.write("| {:<{}} | {:<{}} | {:<{}} | {:<{}} |\n"
+            .format(header_name, package_len,
+                    header_status, status_len,
+                    header_description, description_len,
+                    header_alternative, alternative_len))
     f.write(line_separator(package_len,
                            status_len,
                            description_len,
