@@ -17,6 +17,61 @@ def table_row(i1, l1, i2, l2, i3, l3, i4, l4):
         .format(i1, l1, i2, l2, i3, l3, i4, l4)
 
 
+def as_normal(head_name, head_status, head_alternative, head_description,
+              pac_len, stat_len, alt_len, desc_len,
+              stl_disapproves):
+    # First horizontal separator of table
+    ret = table_separator(pac_len, stat_len, alt_len, desc_len)
+    # Header
+    ret += table_row(head_name, pac_len,
+                     head_status, stat_len,
+                     head_alternative, alt_len,
+                     head_description, desc_len)
+    ret += table_separator(pac_len,
+                           stat_len,
+                           alt_len,
+                           desc_len)
+
+    # Rest of the table
+    for item in stl_disapproves:
+        first = True
+        if len(item[2]) > 0:
+            # let each alternative package name have its own line
+            for s in item[2]:
+                if first:
+                    ret += table_row(item[0], pac_len,
+                                     item[1], stat_len,
+                                     s, alt_len,
+                                     item[3], desc_len)
+                    first = False
+                else:
+                    ret += table_row("", pac_len,
+                                     "", stat_len,
+                                     s, alt_len,
+                                     "", desc_len)
+        else:
+            ret += table_row(item[0], pac_len,
+                             item[1], stat_len,
+                             "", alt_len,
+                             item[3], desc_len)
+        # Horizontal separator
+        ret += table_separator(pac_len,
+                               stat_len,
+                               alt_len,
+                               desc_len)
+    return ret
+
+
+def as_markdown_header(h1, h2, h3, h4):
+    return "|{}|{}|{}|{}|  \n" \
+           "|---|---|---|---|  \n" \
+           .format(h1, h2, h3, h4)
+
+
+def as_markdown_body(w, x, y, z):
+    return "|{}|{}|{}|{}|  \n".format(w, x, y, z)
+
+
 parser = argparse.ArgumentParser(description='Find proprietary packages')
 parser.add_argument('-f', '--full', action='store_true',
                     help='Print every package not just nonfree')
@@ -165,88 +220,88 @@ for item in stallman_disapproves:
     if len(item[3]) > description_len:
         description_len = len(item[3])
 
-# Create a temporary file
-_, tmp_file = tempfile.mkstemp()
-with open(tmp_file, "w") as f:
-    # Print first horizontal separator of table
-    f.write(table_separator(package_len,
-                            status_len,
-                            alternative_len,
-                            description_len))
-    # Print header
-    f.write(table_row(header_name, package_len,
-                      header_status, status_len,
-                      header_alternative, alternative_len,
-                      header_description, description_len))
-    f.write(table_separator(package_len,
-                            status_len,
-                            alternative_len,
-                            description_len))
-    # Print rest of the table
-    for item in stallman_disapproves:
-        # print element
-        first = True
-        if len(item[2]) > 0:
-            for sub in item[2]:
-                if first:
-                    f.write(table_row(item[0], package_len,
-                                      item[1], status_len,
-                                      sub, alternative_len,
-                                      item[3], description_len))
-                    first = False
-                else:
-                    f.write(table_row("", package_len,
-                                      "", status_len,
-                                      sub, alternative_len,
-                                      "", description_len))
-        else:
-            f.write(table_row(item[0], package_len,
-                              item[1], status_len,
-                              "", alternative_len,
-                              item[3], description_len))
-        # print horizontal separator
-        f.write(table_separator(package_len,
-                                status_len,
-                                alternative_len,
-                                description_len))
-# Disable CLI line wrapping
+result = as_normal(header_name, header_status, header_alternative,
+                   header_description, package_len, status_len,
+                   alternative_len, description_len, stallman_disapproves)
+
 subprocess.call(["setterm", "-linewrap", "off"])
-# Print file
-subprocess.call(["cat", tmp_file])
+print(result)
 
 # Ask if file to be saved
 save_it = input("\nSave list to file? (Y/n) ")
 if "n" in save_it.lower():
-    # delete if no
-    subprocess.call(["rm", "-f", tmp_file])
-else:
-    # ask for filename if yes
-    new_file = input("Save it to ({}): ".format(tmp_file))
-    if new_file == "":
-        new_file = tmp_file
-    else:
-        # get absolute path, treat tilde as user's home folder
-        new_file = os.path.abspath(os.path.expanduser(new_file))
-        # leave tmp_file if user doesn't have permission to create new dir
-        try:
-            os.makedirs(os.path.dirname(new_file), exist_ok=True)
-        except PermissionError:
-            print("You don't have the right permissions!")
-            new_file = tmp_file
-        # leave tmp_file if user doesn't have permission to create file
-    if tmp_file != new_file:
-        try:
-            # copy tmp_file to new_file
-            with open(new_file, "w") as nf:
-                with open(tmp_file) as tf:
-                    for line in tf:
-                        nf.write(line)
-        except PermissionError:
-            print("You don't have the right permissions!")
-            new_file = tmp_file
+    sys.exit()
 
-    # Print save location and CLI view suggestions
-    print("The list is saved at", new_file)
-    print("\nYou can review it from the command line\n"
-          "using the \"less -S {0}\"\n"
-          "or, if installed, the \"most {0}\" commands".format(new_file))
+# Ask if save as markdown
+i = input("Save as markdown table? (Y/n) ")
+if "n" in i.lower():
+    markdown = False
+else:
+    markdown = True
+
+# Create temporary file
+_, tmp_file = tempfile.mkstemp()
+if markdown:
+    subprocess.call(["mv", tmp_file, tmp_file + ".md"])
+    tmp_file += ".md"
+
+# Ask for filename
+new_file = input("Save it to ({}): ".format(tmp_file))
+if new_file == "":
+    new_file = tmp_file
+else:
+    # get absolute path, treat tilde as user's home folder
+    new_file = os.path.abspath(os.path.expanduser(new_file))
+    # leave tmp_file if user doesn't have permission to create new dir
+    try:
+        os.makedirs(os.path.dirname(new_file), exist_ok=True)
+    except PermissionError:
+        print("You don't have the right permissions!")
+        new_file = tmp_file
+# leave tmp_file if user doesn't have permission to create file
+if tmp_file != new_file:
+    try:
+        if markdown:
+            # save as markdown table
+            if new_file[-3:] != ".md":
+                new_file += ".md"
+            with open(new_file, "w") as f:
+                f.write(as_markdown_header(header_name,
+                                           header_status,
+                                           header_alternative,
+                                           header_description))
+                for item in stallman_disapproves:
+                    alt = "<br>".join(item[2])
+                    f.write(as_markdown_body(item[0], item[1], alt, item[3]))
+        else:
+            # save as regular file
+            with open(new_file, "w") as f:
+                f.write(result)
+    except PermissionError:
+        print("You don't have the right permissions!")
+        # save temporary file on permission error
+        new_file = tmp_file
+        if markdown:
+            # as markdown
+            with open(new_file, "w") as f:
+                f.write(as_markdown_header(header_name,
+                                           header_status,
+                                           header_alternative,
+                                           header_description))
+                for item in stallman_disapproves:
+                    alt = "<br>".join(item[2])
+                    f.write(as_markdown_body(item[0], item[1], alt, item[3]))
+        else:
+            # as regular file
+            with open(new_file, "w") as f:
+                f.write(result)
+
+# Delete empty temporary file
+if os.stat(tmp_file).st_size == 0:
+    os.remove(tmp_file)
+
+# Print save location and CLI view suggestions
+print("The list is saved at", new_file)
+print("\nYou can review it from the command line\n"
+      "using the \"less -S {0}\"\n"
+      "or, if installed, the \"most {0}\" commands".format(new_file))
