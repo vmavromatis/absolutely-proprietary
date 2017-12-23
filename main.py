@@ -295,6 +295,19 @@ if tmp_file != new_file:
             # as regular file
             with open(new_file, "w") as f:
                 f.write(result)
+else:
+    if markdown:
+        with open(new_file, "w") as f:
+            f.write(as_markdown_header(header_name,
+                                       header_status,
+                                       header_alternative,
+                                       header_description))
+            for item in stallman_disapproves:
+                alt = "<br>".join(item[2])
+                f.write(as_markdown_body(item[0], item[1], alt, item[3]))
+    else:
+        with open(new_file, "w") as f:
+            f.write(result)
 
 # Delete empty temporary file
 if os.stat(tmp_file).st_size == 0:
