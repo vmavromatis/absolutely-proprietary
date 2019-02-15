@@ -166,7 +166,7 @@ else:
 # Print results
 print("{0}{1}\n{2} ABSOLUTELY PROPRIETARY PACKAGES INSTALLED\n{1}{3}"
       .format(INDEX_COLOR, "=" * 45, proprietary, RESET))
-print("\nYour GNU/Linux is infected with {0}{2}{1} proprietary packages"
+print("\nYour GNU/Linux is infected with {0}{2}{1} proprietary packages "
       "out of {0}{3}{1} total installed.\n"
       "Your Stallman Freedom Index is {0}{4:.2f}{1}\n"
       .format(INDEX_COLOR, RESET, proprietary, total, stallmanfreedomindex))
