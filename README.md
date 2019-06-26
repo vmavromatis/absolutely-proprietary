@@ -4,13 +4,13 @@ Proprietary package detector for arch-based distros. Compares your installed pac
 *Update - I thought it's better to remove all the ascii stuff so there are no external libs. Thanks for the PRs!*
 
 # Install
-`git clone https://github.com/vmavromatis/absolutely-proprietary.git`  
+`git clone https://github.com/vmavromatis/absolutely-proprietary.git`
 `cd absolutely-proprietary`
 # Update
-`cd absolutely-proprietary`  
+`cd absolutely-proprietary`
 `git pull https://github.com/vmavromatis/absolutely-proprietary.git`
 # Run
-`python main.py [arguments]`
+`python absolutely_proprietary [arguments]`
 
 Explanation of terms:
 - *nonfree*: This package is blatantly nonfree software.
