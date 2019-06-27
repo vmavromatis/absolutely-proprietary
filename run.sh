@@ -2,7 +2,7 @@
 
 sudo pacman -S python --needed
 cd /tmp
-if [[ -d "absolutely-proprietary" ]]; then
+if [ -d "absolutely-proprietary" ]; then
     cd absolutely-proprietary
     git pull
 else
@@ -10,5 +10,4 @@ else
     cd absolutely-proprietary
 fi
 # sudo pip install -r requirements.txt -U
-python main.py
-
+python absolutely_proprietary
