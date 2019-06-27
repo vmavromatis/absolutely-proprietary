@@ -31,7 +31,7 @@ setup(
     install_requires=[''],
     entry_points={
         'console_scripts': [
-            'absolutely-proprietary=absolutely_proprietary.__main__'
+            'absolutely-proprietary=absolutely_proprietary.__init__'
         ]
     },
 )

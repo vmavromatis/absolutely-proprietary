@@ -10,4 +10,4 @@ else
     cd absolutely-proprietary
 fi
 # sudo pip install -r requirements.txt -U
-python absolutely_proprietary
+python absolutely_proprietary/__init__.py
