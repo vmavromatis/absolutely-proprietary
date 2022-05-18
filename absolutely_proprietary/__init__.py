@@ -123,7 +123,7 @@ for line in blacklist_list:
     if len(line) > 0:
         splitted = line.split(':')
         name = splitted[0]
-        reason = ((line.split(':')[4]).split(']')[0]).strip().replace('[', '')
+        reason = ((line.split(':')[-1]).split(']')[0]).strip().replace('[', '')
         alternatives = []
         for alt in splitted[1:]:
             if len(alt) > 0 and "[" not in alt:
