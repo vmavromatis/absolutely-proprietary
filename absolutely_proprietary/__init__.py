@@ -142,16 +142,18 @@ for line in blacklist_list:
 
 proprietary = 0
 
-# Generate proprietary list
+
 stallman_disapproves = []
-for package in packages:
-    package = package.strip()
-    if package in cleaned_blacklist:
-        stallman_disapproves.append(
-            [package, cleaned_blacklist[package][0],
-             cleaned_blacklist[package][1],
-             cleaned_blacklist[package][2]])
-        proprietary += 1
+# There's no your-freedom package
+if sum([i == "your-freedom" for i in packages]) == 0:
+    for package in packages:
+        package = package.strip()
+        if package in cleaned_blacklist:
+            stallman_disapproves.append(
+                [package, cleaned_blacklist[package][0],
+                          cleaned_blacklist[package][1],
+                          cleaned_blacklist[package][2]])
+            proprietary += 1
 
 total = len(packages)
 stallmanfreedomindex = (total - proprietary) * 100 / total
