@@ -13,7 +13,7 @@ https://aur.archlinux.org/packages/absolutely-proprietary/
 `cd absolutely-proprietary`
 `git pull https://github.com/vmavromatis/absolutely-proprietary.git`
 # Run
-`python absolutely_proprietary/__init__.py [arguments]`
+`python absolutely-proprietary/__init__.py [arguments]`
 
 Explanation of terms:
 - *nonfree*: This package is blatantly nonfree software.
